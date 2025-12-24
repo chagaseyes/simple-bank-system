@@ -1,6 +1,7 @@
-    package com.gabrielchagas.banking;
-    import java.util.InputMismatchException;
-    import java.util.Scanner;
+package com.gabrielchagas.banking;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
     /**
      * Main application class for the simple Console Bank System.
      * Handles user interaction, registration, and links clients to their accounts.
@@ -11,6 +12,8 @@
         public static void main(String[] args) {
 
             Scanner scanner = new Scanner(System.in);
+           
+            AccountStorage storage = new AccountStorage();
 
             Client holder = newClient(scanner);
 
@@ -20,9 +23,8 @@
                 return;
             }
 
-            BankAccount account = createBankAccount(scanner, holder); 
-
-            runMenu(scanner, holder, account);
+            BankAccount account = storage.createBankAccount(holder);
+                        runMenu(scanner, holder, account);
 
             scanner.close();
         }
@@ -82,26 +84,7 @@
 
 
         }
-
-        /**
-         * Creates a new BankAccount object for the registered client.
-         * @param scanner The Scanner object for input.
-         * @param holderClient The Client object to link to the account.
-         * @return The newly created BankAccount object.
-         */
-        public static BankAccount createBankAccount(Scanner scanner, Client holderClient) {
-            
-            System.out.println("\nACCOUNT REGISTRATION");
-
-            double initialBalance = 0.0;
-
-            System.out.println("Enter your account code:");
-            String readAccountCode = scanner.nextLine();
-
-            BankAccount novaconta = new BankAccount(readAccountCode, initialBalance, holderClient);
-            return novaconta;
-        }
-
+        
         /**
          * Runs the main menu loop for account operations.
          * @param scanner The Scanner object for input.
